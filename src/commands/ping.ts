@@ -1,4 +1,4 @@
-import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from 'discord.js'
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Command } from '../types/command'
 import { createBaseEmbed } from '../utils/embed'
 
