@@ -12,7 +12,7 @@ export async function registerCommands(
   const commandsData = Array.from(commands.values()).map((cmd) => cmd.data.toJSON())
 
   console.log(
-    '📋 Commands to register:',
+    '\n📋 Commands to register:',
     commandsData.map((cmd) => cmd.name)
   )
 
