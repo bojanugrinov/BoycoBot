@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Events } from 'discord.js'
+import { Client, GatewayIntentBits, Events, ActivityType } from 'discord.js'
 import * as dotenv from 'dotenv'
 import { handleInteraction } from './handlers/interactionHandler'
 import { loadCommands } from './utils/loadCommands'
@@ -20,6 +20,8 @@ const client = new Client({
 const commands = loadCommands()
 
 client.once(Events.ClientReady, (client) => {
+  client.user.setActivity('BoycoBot | /help', { type: ActivityType.Watching })
+
   console.log(`✅ Bot is online! Logged in as ${client.user.tag}`)
   console.log(`📊 Bot is in ${client.guilds.cache.size} server(s)\n`)
 })
