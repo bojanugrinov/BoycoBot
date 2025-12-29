@@ -3,7 +3,6 @@ import * as dotenv from 'dotenv'
 import { handleInteraction } from './handlers/interactionHandler'
 import { loadCommands } from './utils/loadCommands'
 import { registerCommands } from './utils/registerCommands'
-import { clearCommands } from './utils/clearCommands'
 
 dotenv.config()
 
@@ -32,8 +31,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 async function start() {
   try {
-    await clearCommands(process.env.DISCORD_TOKEN!, process.env.CLIENT_ID!, process.env.GUILD_ID!)
-
     await registerCommands(
       commands,
       process.env.DISCORD_TOKEN!,
