@@ -1,11 +1,14 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../types/command'
-import { createBaseEmbed } from '../utils/embed'
+import { Command } from '../../types/command'
+import { createBaseEmbed } from '../../utils/embed'
+import { Category } from '../../types/category'
 
 export const info: Command = {
   data: new SlashCommandBuilder()
     .setName('info')
     .setDescription(`Display information about the user, server and bot.`),
+
+  category: Category.UTILITY,
 
   async execute(interaction: CommandInteraction) {
     const bot = interaction.client.user

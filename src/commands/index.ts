@@ -1,3 +1,4 @@
-export { help } from './help'
-export { info } from './info'
-export { ping } from './ping'
+// Utility
+export { help } from './utility/help'
+export { info } from './utility/info'
+export { ping } from './utility/ping'

@@ -1,9 +1,12 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../types/command'
-import { createBaseEmbed } from '../utils/embed'
+import { Command } from '../../types/command'
+import { createBaseEmbed } from '../../utils/embed'
+import { Category } from '../../types/category'
 
 export const ping: Command = {
   data: new SlashCommandBuilder().setName('ping').setDescription(`Check the bot's response time.`),
+
+  category: Category.UTILITY,
 
   async execute(interaction: CommandInteraction) {
     await interaction.reply({ content: 'Pinging...', withResponse: true })
