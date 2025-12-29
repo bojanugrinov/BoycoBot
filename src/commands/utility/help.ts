@@ -22,10 +22,10 @@ export const help: Command = {
       categories[category].push(command)
     })
 
-    const message = createBaseEmbed(interaction).setDescription('🤖 **Bot Commands**')
+    const embed = createBaseEmbed(interaction, 'Bot Commands')
 
     Object.entries(categories).map(([categoryName, commands]) => {
-      message.addFields({
+      embed.addFields({
         name: `📂 ${categoryName} Commands`,
         value: commands
           .map((command) => `\`/${command.data.name}\` - ${command.data.description}`)
@@ -34,6 +34,6 @@ export const help: Command = {
       })
     })
 
-    await interaction.reply({ content: '', embeds: [message] })
+    await interaction.reply({ embeds: [embed] })
   },
 }

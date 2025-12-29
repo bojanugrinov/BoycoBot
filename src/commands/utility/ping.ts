@@ -14,8 +14,8 @@ export const ping: Command = {
     const sent = await interaction.fetchReply()
     const latency = sent.createdTimestamp - interaction.createdTimestamp
 
-    const message = createBaseEmbed(interaction).setTitle(`Latency: \`${latency}ms\``)
+    const embed = createBaseEmbed(interaction).setTitle(`Latency: \`${latency}ms\``)
 
-    await interaction.editReply({ content: '', embeds: [message] })
+    await interaction.editReply({ embeds: [embed] })
   },
 }

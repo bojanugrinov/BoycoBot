@@ -16,7 +16,7 @@ export const info: Command = {
     const userMember = interaction.guild?.members.cache.get(user.id)
     const guild = interaction.guild
 
-    const message = createBaseEmbed(interaction)
+    const embed = createBaseEmbed(interaction)
       .setThumbnail(user.displayAvatarURL({ size: 256 }))
       .addFields(
         {
@@ -62,6 +62,6 @@ export const info: Command = {
         }
       )
 
-    await interaction.reply({ content: '', embeds: [message] })
+    await interaction.reply({ embeds: [embed] })
   },
 }
