@@ -1,5 +1,6 @@
 // FUN
 export { coinflip } from './fun/coinflip'
+export { roll } from './fun/roll'
 
 // Utility
 export { help } from './utility/help'

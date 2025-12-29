@@ -1,8 +1,12 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
+import {
+  ChatInputCommandInteraction,
+  SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
+} from 'discord.js'
 import { Category } from './category'
 
 export interface Command {
-  data: SlashCommandBuilder
+  data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder
   category: Category
-  execute: (interaction: CommandInteraction) => Promise<void>
+  execute: (interaction: ChatInputCommandInteraction) => Promise<void>
 }
