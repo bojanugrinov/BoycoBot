@@ -1,4 +1,5 @@
 // FUN
+export { cat } from './fun/cat'
 export { coinflip } from './fun/coinflip'
 export { roll } from './fun/roll'
 
