@@ -11,7 +11,7 @@ export const info: Command = {
   category: Category.UTILITY,
 
   async execute(interaction: CommandInteraction) {
-    const bot = interaction.client.user
+    const client = interaction.client.user
     const user = interaction.user
     const userMember = interaction.guild?.members.cache.get(user.id)
     const guild = interaction.guild
@@ -54,9 +54,9 @@ export const info: Command = {
         {
           name: '🤖 Bot Information',
           value: [
-            `**Name:** ${bot.username} #${bot.discriminator}`,
-            `**ID:** \`${bot.id}\``,
-            `**Created:** <t:${Math.floor(bot.createdTimestamp / 1000)}:R>`,
+            `**Name:** ${client.username} #${client.discriminator}`,
+            `**ID:** \`${client.id}\``,
+            `**Created:** <t:${Math.floor(client.createdTimestamp / 1000)}:R>`,
           ].join('\n'),
           inline: true,
         }
