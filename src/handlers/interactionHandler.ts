@@ -8,6 +8,7 @@ export async function handleInteraction(
   if (!interaction.isChatInputCommand()) return
 
   const command = commands.get(interaction.commandName)
+  const timestamp = new Date().toLocaleString('en-CA', { hour12: false }).replace(',', ' -')
 
   if (!command) {
     console.log(`Command ${interaction.commandName} not found`)
@@ -16,7 +17,9 @@ export async function handleInteraction(
 
   try {
     await command.execute(interaction)
-    console.log(`✅ Command /${interaction.commandName} executed by ${interaction.user.tag}`)
+    console.log(
+      `[${timestamp}] ✅ Command /${interaction.commandName} executed by ${interaction.user.tag} (ID: ${interaction.user.id})`
+    )
   } catch (error) {
     console.error('Error executing command:', error)
 
