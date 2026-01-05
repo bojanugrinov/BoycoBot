@@ -13,8 +13,9 @@ export const help: Command = {
 
   async execute(interaction: CommandInteraction) {
     const commandList = Object.values(commandModules) as Command[]
-
     const categories: Record<string, Command[]> = {}
+    const client = interaction.client.user
+    const clientAvatar = client.displayAvatarURL({ extension: 'png', size: 1024 })
 
     commandList.map((command) => {
       const category = command.category
@@ -22,7 +23,7 @@ export const help: Command = {
       categories[category].push(command)
     })
 
-    const embed = createBaseEmbed(interaction, 'Bot Commands')
+    const embed = createBaseEmbed(interaction, 'BoycoBot Help Menu').setThumbnail(clientAvatar)
 
     Object.entries(categories).map(([categoryName, commands]) => {
       embed.addFields({
