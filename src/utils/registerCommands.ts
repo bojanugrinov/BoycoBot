@@ -21,7 +21,7 @@ export async function registerCommands(
 
   console.log('\n📋 Commands to register:')
   Object.entries(categories).map(([category, commands]) => {
-    console.log(`📂 ${category}:`, commands)
+    console.log(`📂 [${commands.length}] ${category}:`, commands)
   })
 
   try {
