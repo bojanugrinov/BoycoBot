@@ -7,7 +7,6 @@ export { roll } from './fun/roll'
 // UTILITY
 export { botinfo } from './utility/botinfo'
 export { help } from './utility/help'
-export { info } from './utility/info'
 export { ping } from './utility/ping'
 export { serverinfo } from './utility/serverinfo'
 export { userinfo } from './utility/userinfo'
