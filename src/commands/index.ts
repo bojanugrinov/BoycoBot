@@ -1,3 +1,9 @@
+// ECONOMY
+export { balance } from './economy/balance'
+export { crime } from './economy/crime'
+export { leaderboard } from './economy/leaderboard'
+export { work } from './economy/work'
+
 // FUN
 export { cat } from './fun/cat'
 export { coinflip } from './fun/coinflip'

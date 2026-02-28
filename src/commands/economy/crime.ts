@@ -1,0 +1,49 @@
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
+import { Command } from '../../types/command'
+import { Category } from '../../types/category'
+import { loadEconomy, saveEconomy, getUser } from '../../utils/economy'
+import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
+
+export const crime: Command = {
+  data: new SlashCommandBuilder()
+    .setName('crime')
+    .setDescription(`Take a risk and earn some money through crime.`),
+
+  category: Category.ECONOMY,
+
+  async execute(interaction: CommandInteraction) {
+    const guildId = interaction.guildId!
+    const userId = interaction.user.id
+
+    const economy = loadEconomy()
+    const user = getUser(economy, guildId, userId)
+
+    const success = Math.random() < 0.5
+
+    const description = success
+      ? (() => {
+          const earned = Math.floor(Math.random() * 101) + 100
+          user.balance += earned
+
+          return crimeSuccessMessages[
+            Math.floor(Math.random() * crimeSuccessMessages.length)
+          ].replace('${earned}', earned.toString())
+        })()
+      : (() => {
+          const lost = Math.floor(Math.random() * 101) + 100
+          const amountLost = Math.min(lost, user.balance)
+          user.balance -= amountLost
+
+          return crimeFailureMessages[
+            Math.floor(Math.random() * crimeFailureMessages.length)
+          ].replace('${amountLost}', amountLost.toString())
+        })()
+
+    saveEconomy(economy)
+
+    const embed = createEconomyEmbed(success ? 'profit' : 'loss').setDescription(description)
+
+    await interaction.reply({ embeds: [embed] })
+  },
+}
