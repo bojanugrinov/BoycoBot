@@ -1,7 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Command } from '../../types/command'
 import { Category } from '../../types/category'
-import { loadEconomy, getUser } from '../../utils/economy'
+import { loadEconomy } from '../../utils/economy'
 import { createEconomyEmbed } from '../../embeds/economyEmbed'
 import { formatBalance } from '../../utils/formatBalance'
 
