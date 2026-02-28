@@ -1,19 +1,8 @@
 import fs from 'fs'
 import path from 'path'
+import { Economy } from '../types/economy'
 
 const FILEPATH = path.join(__dirname, '../data/economy.json')
-
-interface UserData {
-  balance: number
-}
-
-interface GuildEconomy {
-  users: Record<string, UserData>
-}
-
-interface Economy {
-  guilds: Record<string, GuildEconomy>
-}
 
 export function loadEconomy() {
   if (!fs.existsSync(FILEPATH)) {
