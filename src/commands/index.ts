@@ -2,6 +2,7 @@
 export { balance } from './economy/balance'
 export { crime } from './economy/crime'
 export { leaderboard } from './economy/leaderboard'
+export { transfer } from './economy/transfer'
 export { work } from './economy/work'
 
 // FUN
