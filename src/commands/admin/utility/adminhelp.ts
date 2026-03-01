@@ -1,15 +1,15 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
-import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { Category, Command, CommandScope } from '../../../types/command'
+import { createBaseEmbed } from '../../../utils/embed'
 import * as commandModules from '../index'
 
-export const help: Command = {
+export const adminhelp: Command = {
   data: new SlashCommandBuilder()
-    .setName('help')
-    .setDescription('Display a list of all available commands.'),
+    .setName('adminhelp')
+    .setDescription('Display a list of all available admin commands.'),
 
   category: Category.UTILITY,
-  scope: CommandScope.PUBLIC,
+  scope: CommandScope.ADMIN,
 
   async execute(interaction: CommandInteraction) {
     const commandList = Object.values(commandModules) as Command[]
@@ -23,7 +23,9 @@ export const help: Command = {
       categories[category].push(command)
     })
 
-    const embed = createBaseEmbed(interaction, 'BoycoBot Help Menu').setThumbnail(clientAvatar)
+    const embed = createBaseEmbed(interaction, 'BoycoBot Admin Help Menu').setThumbnail(
+      clientAvatar,
+    )
 
     Object.entries(categories).map(([categoryName, commands]) => {
       embed.addFields({
