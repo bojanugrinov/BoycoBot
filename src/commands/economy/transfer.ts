@@ -1,6 +1,5 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
-import { Category } from '../../types/category'
+import { Category, Command, CommandScope } from '../../types/command'
 import { createEconomyEmbed } from '../../embeds/economyEmbed'
 import { getUser, loadEconomy, saveEconomy } from '../../utils/economy'
 import { formatBalance } from '../../utils/formatBalance'
@@ -17,6 +16,7 @@ export const transfer: Command = {
     ),
 
   category: Category.ECONOMY,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: ChatInputCommandInteraction) {
     const guildId = interaction.guildId!

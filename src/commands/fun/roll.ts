@@ -1,6 +1,5 @@
 import { ChatInputCommandInteraction, CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
-import { Category } from '../../types/category'
+import { Category, Command, CommandScope } from '../../types/command'
 
 export const roll: Command = {
   data: new SlashCommandBuilder()
@@ -12,10 +11,11 @@ export const roll: Command = {
         .setDescription('Input a number from 1 to 100.')
         .setRequired(true)
         .setMinValue(1)
-        .setMaxValue(100)
+        .setMaxValue(100),
     ),
 
   category: Category.FUN,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: ChatInputCommandInteraction) {
     const user = interaction.user

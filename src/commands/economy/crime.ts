@@ -1,6 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
-import { Category } from '../../types/category'
+import { Category, Command, CommandScope } from '../../types/command'
 import { loadEconomy, saveEconomy, getUser } from '../../utils/economy'
 import { createEconomyEmbed } from '../../embeds/economyEmbed'
 import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
@@ -11,6 +10,7 @@ export const crime: Command = {
     .setDescription(`Take a risk and earn some money through crime.`),
 
   category: Category.ECONOMY,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
     const guildId = interaction.guildId!

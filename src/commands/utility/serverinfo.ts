@@ -1,7 +1,6 @@
 import { ChannelType, CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
+import { Category, Command, CommandScope } from '../../types/command'
 import { createBaseEmbed } from '../../utils/embed'
-import { Category } from '../../types/category'
 
 export const serverinfo: Command = {
   data: new SlashCommandBuilder()
@@ -9,6 +8,7 @@ export const serverinfo: Command = {
     .setDescription('Display information about the server.'),
 
   category: Category.UTILITY,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
     const guild = interaction.guild!
@@ -91,7 +91,7 @@ export const serverinfo: Command = {
             .slice(0, 15)
             .join(', ') + (roles.size > 15 ? '...' : ''),
         inline: false,
-      }
+      },
     )
 
     await interaction.reply({ embeds: [embed] })

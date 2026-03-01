@@ -1,12 +1,12 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
+import { Category, Command, CommandScope } from '../../types/command'
 import { createBaseEmbed } from '../../utils/embed'
-import { Category } from '../../types/category'
 
 export const dog: Command = {
   data: new SlashCommandBuilder().setName('dog').setDescription(`Shows a random dog picture.`),
 
   category: Category.FUN,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
     const user = interaction.user

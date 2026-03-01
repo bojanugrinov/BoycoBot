@@ -1,6 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
-import { Category } from '../../types/category'
+import { Category, Command, CommandScope } from '../../types/command'
 
 export const coinflip: Command = {
   data: new SlashCommandBuilder()
@@ -8,6 +7,7 @@ export const coinflip: Command = {
     .setDescription(`Flip a coin and get heads or tails.`),
 
   category: Category.FUN,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
     const user = interaction.user

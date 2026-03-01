@@ -1,7 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
+import { Category, Command, CommandScope } from '../../types/command'
 import { createBaseEmbed } from '../../utils/embed'
-import { Category } from '../../types/category'
 
 export const botinfo: Command = {
   data: new SlashCommandBuilder()
@@ -9,6 +8,7 @@ export const botinfo: Command = {
     .setDescription('Display information about the bot.'),
 
   category: Category.UTILITY,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
     const client = interaction.client
@@ -64,7 +64,7 @@ export const botinfo: Command = {
         name: 'Ping',
         value: `${Math.round(client.ws.ping)}ms`,
         inline: true,
-      }
+      },
     )
 
     await interaction.reply({ embeds: [embed] })

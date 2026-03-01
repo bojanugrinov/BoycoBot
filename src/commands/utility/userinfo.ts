@@ -1,17 +1,17 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js'
-import { Command } from '../../types/command'
+import { Category, Command, CommandScope } from '../../types/command'
 import { createBaseEmbed } from '../../utils/embed'
-import { Category } from '../../types/category'
 
 export const userinfo: Command = {
   data: new SlashCommandBuilder()
     .setName('userinfo')
     .setDescription('Display information about a user.')
     .addUserOption((option) =>
-      option.setName('user').setDescription('The user to get information about').setRequired(false)
+      option.setName('user').setDescription('The user to get information about').setRequired(false),
     ),
 
   category: Category.UTILITY,
+  scope: CommandScope.PUBLIC,
 
   async execute(interaction: ChatInputCommandInteraction) {
     const targetUser = interaction.options.getUser('user') ?? interaction.user
@@ -34,7 +34,7 @@ export const userinfo: Command = {
             day: 'numeric',
             month: 'long',
             year: 'numeric',
-          }
+          },
         )}`,
       })
 
@@ -93,7 +93,7 @@ export const userinfo: Command = {
                 .join(', ') + (roles.size > 15 ? '...' : '')
             : 'None',
         inline: false,
-      }
+      },
     )
 
     await interaction.reply({ embeds: [embed] })
