@@ -16,7 +16,7 @@ const client = new Client({
   intents: [GatewayIntentBits.Guilds],
 })
 
-const commands = loadCommands()
+const { commands, adminCommands } = loadCommands()
 
 client.once(Events.ClientReady, (client) => {
   client.user.setActivity('BoycoBot | /help', { type: ActivityType.Watching })
@@ -26,16 +26,17 @@ client.once(Events.ClientReady, (client) => {
 })
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  await handleInteraction(interaction, commands)
+  await handleInteraction(interaction, commands, adminCommands)
 })
 
 async function start() {
   try {
     await registerCommands(
       commands,
+      adminCommands,
       process.env.DISCORD_TOKEN!,
       process.env.CLIENT_ID!,
-      process.env.GUILD_ID!
+      process.env.GUILD_ID!,
     )
 
     await client.login(process.env.DISCORD_TOKEN)
