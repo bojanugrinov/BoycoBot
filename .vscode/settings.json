@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["botinfo", "coinflip", "serverinfo"]
+  "cSpell.words": [
+    "addmoney",
+    "botinfo",
+    "coinflip",
+    "removemoney",
+    "reseteconomy",
+    "serverinfo",
+    "setbalance"
+  ]
 }
