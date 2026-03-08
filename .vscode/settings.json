@@ -4,6 +4,7 @@
     "adminhelp",
     "botinfo",
     "coinflip",
+    "COOLDOWN",
     "removemoney",
     "reseteconomy",
     "serverinfo",

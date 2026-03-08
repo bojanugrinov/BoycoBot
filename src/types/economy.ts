@@ -1,5 +1,6 @@
 interface UserData {
   balance: number
+  lastDaily: number
 }
 
 interface GuildEconomy {

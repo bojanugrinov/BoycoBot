@@ -1,6 +1,7 @@
 // ECONOMY
 export { balance } from './economy/balance'
 export { crime } from './economy/crime'
+export { daily } from './economy/daily'
 export { leaderboard } from './economy/leaderboard'
 export { transfer } from './economy/transfer'
 export { work } from './economy/work'
