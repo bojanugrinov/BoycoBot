@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/images/avatar.png" alt="Boyco Bot Avatar" width="200" height="200" />
+  <img src="src/assets/avatar.png" alt="Boyco Bot Avatar" width="200" height="200" />
   <h1 style="font-weight: bold">BoycoBot</h1>
   <p>A powerful and modular Discord bot built with Discord.js and TypeScript</p>
 </div>
