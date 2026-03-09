@@ -25,7 +25,7 @@ export function getUser(economy: Economy, guildId: string, userId: string) {
   const guildEconomy = economy.guilds[guildId]
 
   if (!guildEconomy.users[userId]) {
-    guildEconomy.users[userId] = { balance: 0, lastDaily: 0 }
+    guildEconomy.users[userId] = { balance: 0, lastDaily: 0, lastWork: 0, lastCrime: 0 }
   }
 
   return guildEconomy.users[userId]

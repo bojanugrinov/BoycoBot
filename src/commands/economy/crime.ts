@@ -1,8 +1,11 @@
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
+import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
 import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
 import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
 import { createEmbed } from '../../utils/embed'
+import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
+
+const COMMAND_COOLDOWN = 5 * 60 * 1000 // 5m
 
 export const crime: Command = {
   data: new SlashCommandBuilder()
@@ -19,7 +22,21 @@ export const crime: Command = {
     const economy = loadEconomy()
     const user = getUser(economy, guildId, userId)
 
+    const cooldown = getRemainingCooldown(user.lastCrime, COMMAND_COOLDOWN)
+
+    if (cooldown) {
+      const { hours, minutes, seconds } = cooldown
+
+      const embed = createEmbed(this.category)
+        .setColor('Red')
+        .setDescription(`⏳ You can do crime again in \`${hours}h ${minutes}m ${seconds}s\`.`)
+
+      await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
+      return
+    }
+
     const success = Math.random() < 0.5
+    user.lastCrime = Date.now()
 
     const description = success
       ? (() => {
