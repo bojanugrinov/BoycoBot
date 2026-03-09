@@ -20,7 +20,6 @@ export const daily: Command = {
     const economy = loadEconomy()
     const user = getUser(economy, guildId, userId)
 
-    const now = Date.now()
     const cooldown = getRemainingCooldown(user.lastDaily, COMMAND_COOLDOWN)
 
     if (cooldown) {
@@ -28,14 +27,14 @@ export const daily: Command = {
 
       const embed = createEmbed(this.category)
         .setColor('Red')
-        .setDescription(`⏳ You can claim again in \`**${hours}h ${minutes}m ${seconds}s*\`.`)
+        .setDescription(`⏳ You can claim again in \`${hours}h ${minutes}m ${seconds}s\`.`)
 
       await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
       return
     }
 
     user.balance += DAILY_AMOUNT
-    user.lastDaily = now
+    user.lastDaily = Date.now()
 
     saveEconomy(economy)
 
