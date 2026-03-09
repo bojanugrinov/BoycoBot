@@ -2,9 +2,10 @@ import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.j
 import { Category, Command, CommandScope } from '../../types/command'
 import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
 import { createEmbed } from '../../utils/embed'
+import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
 
 const DAILY_AMOUNT = 500
-const COOLDOWN = 24 * 60 * 60 * 1000 // 24h
+const COMMAND_COOLDOWN = 24 * 60 * 60 * 1000 // 24h
 
 export const daily: Command = {
   data: new SlashCommandBuilder().setName('daily').setDescription(`Claim your daily reward.`),
@@ -20,16 +21,14 @@ export const daily: Command = {
     const user = getUser(economy, guildId, userId)
 
     const now = Date.now()
+    const cooldown = getRemainingCooldown(user.lastDaily, COMMAND_COOLDOWN)
 
-    if (user.lastDaily && now - user.lastDaily < COOLDOWN) {
-      const remaining = COOLDOWN - (now - user.lastDaily)
-
-      const hours = Math.floor(remaining / (1000 * 60 * 60))
-      const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))
+    if (cooldown) {
+      const { hours, minutes, seconds } = cooldown
 
       const embed = createEmbed(this.category)
         .setColor('Red')
-        .setDescription(`⏳ You can claim again in ${hours}h ${minutes}m.`)
+        .setDescription(`⏳ You can claim again in \`**${hours}h ${minutes}m ${seconds}s*\`.`)
 
       await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
       return
