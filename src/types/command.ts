@@ -7,7 +7,7 @@ import {
 export enum Category {
   ECONOMY = '🏦 Economy',
   FUN = '🎉 Fun',
-  UTILITY = '🛠 Utility',
+  UTILITY = '🛠️ Utility',
 }
 
 export enum CommandScope {
