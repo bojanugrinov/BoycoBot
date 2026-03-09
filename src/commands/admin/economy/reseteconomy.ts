@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../../types/command'
-import { createEconomyEmbed } from '../../../embeds/economyEmbed'
-import { loadEconomy, saveEconomy } from '../../../utils/economy'
+import { loadEconomy, saveEconomy } from '../../../services/economyService'
+import { createEmbed } from '../../../utils/embed'
 
 export const reseteconomy: Command = {
   data: new SlashCommandBuilder()
@@ -33,7 +33,7 @@ export const reseteconomy: Command = {
 
     saveEconomy(economy)
 
-    const embed = createEconomyEmbed()
+    const embed = createEmbed(this.category)
       .setColor('Green')
       .setDescription(`✅ Server's economy is successfully reset.`)
       .setFooter({
@@ -41,6 +41,6 @@ export const reseteconomy: Command = {
         iconURL: user.displayAvatarURL({ extension: 'png', size: 1024 }),
       })
 
-    await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
+    await interaction.reply({ embeds: [embed] })
   },
 }

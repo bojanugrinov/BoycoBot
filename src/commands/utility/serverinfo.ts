@@ -1,6 +1,6 @@
 import { ChannelType, CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { createEmbed } from '../../utils/embed'
 
 export const serverinfo: Command = {
   data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ export const serverinfo: Command = {
 
     const roles = guild.roles.cache.filter((role) => role.id !== guild.id && !role.managed)
 
-    const embed = createBaseEmbed(interaction)
+    const embed = createEmbed(this.category)
       .setAuthor({
         name: 'Server Information',
         iconURL: guild.iconURL() ?? '',

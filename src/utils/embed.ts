@@ -1,14 +1,14 @@
-import { CommandInteraction, EmbedBuilder } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
+import { Category } from '../types/command'
 
-export function createBaseEmbed(interaction: CommandInteraction, title?: string): EmbedBuilder {
-  const client = interaction.client.user
-
-  const clientAvatar = client?.displayAvatarURL({ extension: 'png', size: 1024 })
-
+export function createEmbed(
+  category: Category,
+  options?: { includeAuthor?: boolean },
+): EmbedBuilder {
   const embed = new EmbedBuilder().setColor('#0e7fe9')
 
-  if (title) {
-    embed.setAuthor({ name: title, iconURL: clientAvatar })
+  if (options?.includeAuthor ?? true) {
+    embed.setAuthor({ name: category })
   }
 
   return embed

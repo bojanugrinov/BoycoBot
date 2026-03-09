@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, getUser } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy, getUser } from '../../services/economyService'
 import { formatBalance } from '../../utils/formatBalance'
+import { createEmbed } from '../../utils/embed'
 
 export const balance: Command = {
   data: new SlashCommandBuilder().setName('balance').setDescription(`Check your current balance.`),
@@ -19,7 +19,9 @@ export const balance: Command = {
 
     const balance = formatBalance(user.balance)
 
-    const embed = createEconomyEmbed().setDescription(`Your current balance is **$${balance}** 💸`)
+    const embed = createEmbed(this.category).setDescription(
+      `Your current balance is **$${balance}** 💸`,
+    )
 
     await interaction.reply({ embeds: [embed] })
   },

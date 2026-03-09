@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
+import { createEmbed } from '../../utils/embed'
 
 const DAILY_AMOUNT = 500
 const COOLDOWN = 24 * 60 * 60 * 1000 // 24h
@@ -27,7 +27,7 @@ export const daily: Command = {
       const hours = Math.floor(remaining / (1000 * 60 * 60))
       const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60))
 
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription(`⏳ You can claim again in ${hours}h ${minutes}m.`)
 
@@ -40,7 +40,7 @@ export const daily: Command = {
 
     saveEconomy(economy)
 
-    const embed = createEconomyEmbed()
+    const embed = createEmbed(this.category)
       .setColor('Green')
       .setDescription(`You claimed your daily  reward of **$${DAILY_AMOUNT}** 💸`)
 

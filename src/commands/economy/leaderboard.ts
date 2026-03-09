@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy } from '../../services/economyService'
 import { formatBalance } from '../../utils/formatBalance'
+import { createEmbed } from '../../utils/embed'
 
 export const leaderboard: Command = {
   data: new SlashCommandBuilder()
@@ -19,7 +19,9 @@ export const leaderboard: Command = {
     const guildEconomy = economy.guilds[guildId]
 
     if (!guildEconomy || Object.keys(guildEconomy.users).length === 0) {
-      const embed = createEconomyEmbed().setDescription('No economy data for this server yet.')
+      const embed = createEmbed(this.category).setDescription(
+        'No economy data for this server yet.',
+      )
       await interaction.reply({ embeds: [embed] })
       return
     }
@@ -37,7 +39,7 @@ export const leaderboard: Command = {
       })
       .join('\n')
 
-    const embed = createEconomyEmbed().setTimestamp().setDescription(message)
+    const embed = createEmbed(this.category).setTimestamp().setDescription(message)
 
     await interaction.reply({ embeds: [embed] })
   },

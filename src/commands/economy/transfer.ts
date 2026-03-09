@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
-import { getUser, loadEconomy, saveEconomy } from '../../utils/economy'
+import { getUser, loadEconomy, saveEconomy } from '../../services/economyService'
 import { formatBalance } from '../../utils/formatBalance'
+import { createEmbed } from '../../utils/embed'
 
 export const transfer: Command = {
   data: new SlashCommandBuilder()
@@ -25,7 +25,7 @@ export const transfer: Command = {
     const target = interaction.options.getUser('target', true)
 
     if (user.id === target.id) {
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription(`You can't send money to yourself.`)
       await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
@@ -40,7 +40,7 @@ export const transfer: Command = {
     const formattedAmount = formatBalance(amount)
 
     if (sender.balance < amount) {
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription(`You don't have enough money. Current balance: **$${sender.balance}** 💸`)
       await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
@@ -51,7 +51,7 @@ export const transfer: Command = {
     receiver.balance += amount
     saveEconomy(economy)
 
-    const embed = createEconomyEmbed()
+    const embed = createEmbed(this.category)
       .setColor('Green')
       .setDescription(`${user} sent **$${formattedAmount}** 💸 to ${target}`)
 

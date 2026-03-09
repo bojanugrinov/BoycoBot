@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
 import { workMessages } from '../../constants/economyMessages'
+import { createEmbed } from '../../utils/embed'
 
 export const work: Command = {
   data: new SlashCommandBuilder().setName('work').setDescription(`Work and earn some money.`),
@@ -27,7 +27,7 @@ export const work: Command = {
       earned.toString(),
     )
 
-    const embed = createEconomyEmbed('profit').setDescription(message)
+    const embed = createEmbed(this.category).setColor('Green').setDescription(message)
 
     await interaction.reply({ embeds: [embed] })
   },

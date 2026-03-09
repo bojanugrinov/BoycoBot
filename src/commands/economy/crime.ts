@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
 import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
+import { createEmbed } from '../../utils/embed'
 
 export const crime: Command = {
   data: new SlashCommandBuilder()
@@ -42,7 +42,9 @@ export const crime: Command = {
 
     saveEconomy(economy)
 
-    const embed = createEconomyEmbed(success ? 'profit' : 'loss').setDescription(description)
+    const embed = createEmbed(this.category)
+      .setColor(success ? 'Green' : 'Red')
+      .setDescription(description)
 
     await interaction.reply({ embeds: [embed] })
   },

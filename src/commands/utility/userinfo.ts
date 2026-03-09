@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { createEmbed } from '../../utils/embed'
 
 export const userinfo: Command = {
   data: new SlashCommandBuilder()
@@ -21,7 +21,7 @@ export const userinfo: Command = {
       .filter((role) => role.id !== interaction.guild!.id)
       .sort((a, b) => b.position - a.position)
 
-    const embed = createBaseEmbed(interaction)
+    const embed = createEmbed(this.category)
       .setAuthor({
         name: 'User Information',
         iconURL: targetUser.displayAvatarURL(),

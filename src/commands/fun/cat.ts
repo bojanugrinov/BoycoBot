@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { createEmbed } from '../../utils/embed'
 
 export const cat: Command = {
   data: new SlashCommandBuilder().setName('cat').setDescription(`Shows a random cat picture.`),
@@ -21,7 +21,7 @@ export const cat: Command = {
         return
       }
 
-      const embed = createBaseEmbed(interaction)
+      const embed = createEmbed(this.category)
         .setTitle('🐱 Random Cat Picture')
         .setImage(imageURL)
         .setFooter({

@@ -1,8 +1,8 @@
 import { Client, GatewayIntentBits, Events, ActivityType } from 'discord.js'
 import * as dotenv from 'dotenv'
-import { handleInteraction } from './handlers/interactionHandler'
-import { loadCommands } from './utils/loadCommands'
-import { registerCommands } from './utils/registerCommands'
+import { handleInteraction } from './core/interactionHandler'
+import { loadCommands } from './core/loadCommands'
+import { registerCommands } from './core/registerCommands'
 
 dotenv.config()
 

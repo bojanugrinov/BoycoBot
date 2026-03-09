@@ -1,4 +1,4 @@
-import { Collection, REST, Routes, StringMappedInteractionTypes } from 'discord.js'
+import { Collection, REST, Routes } from 'discord.js'
 import { Command } from '../types/command'
 
 export async function registerCommands(

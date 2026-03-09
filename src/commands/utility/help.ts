@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { createEmbed } from '../../utils/embed'
 import * as commandModules from '../index'
 
 export const help: Command = {
@@ -23,7 +23,12 @@ export const help: Command = {
       categories[category].push(command)
     })
 
-    const embed = createBaseEmbed(interaction, 'BoycoBot Help Menu').setThumbnail(clientAvatar)
+    const embed = createEmbed(this.category)
+      .setAuthor({
+        name: 'BoycoBot Help Menu',
+        iconURL: clientAvatar,
+      })
+      .setThumbnail(clientAvatar)
 
     Object.entries(categories).map(([categoryName, commands]) => {
       embed.addFields({
@@ -35,6 +40,6 @@ export const help: Command = {
       })
     })
 
-    await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
+    await interaction.reply({ embeds: [embed] })
   },
 }

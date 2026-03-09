@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { createBaseEmbed } from '../../utils/embed'
+import { createEmbed } from '../../utils/embed'
 
 export const botinfo: Command = {
   data: new SlashCommandBuilder()
@@ -20,7 +20,7 @@ export const botinfo: Command = {
     const minutes = Math.floor(uptime / 60000) % 60
     const seconds = Math.floor(uptime / 1000) % 60
 
-    const embed = createBaseEmbed(interaction)
+    const embed = createEmbed(this.category)
       .setAuthor({
         name: 'Bot Information',
         iconURL: bot.displayAvatarURL(),

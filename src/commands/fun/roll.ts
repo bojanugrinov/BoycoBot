@@ -1,5 +1,6 @@
 import { ChatInputCommandInteraction, CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
+import { createEmbed } from '../../utils/embed'
 
 export const roll: Command = {
   data: new SlashCommandBuilder()
@@ -22,8 +23,10 @@ export const roll: Command = {
     const input = interaction.options.getInteger('input', true)
     const result = Math.floor(Math.random() * input) + 1
 
-    const message = `🎲 **Dice Roll** 🎲\n${user} rolled a **d${input}** and got: **${result}** 🎲`
+    const embed = createEmbed(this.category)
+      .setAuthor({ name: '🎲 Dice Roll' })
+      .setDescription(`${user} rolled a **1d${input}** and got: **${result}** 🎲`)
 
-    await interaction.reply(message)
+    await interaction.reply({ embeds: [embed] })
   },
 }

@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, getUser, saveEconomy } from '../../utils/economy'
-import { createEconomyEmbed } from '../../embeds/economyEmbed'
+import { loadEconomy, getUser, saveEconomy } from '../../services/economyService'
 import { formatBalance } from '../../utils/formatBalance'
+import { createEmbed } from '../../utils/embed'
 
 export const slots: Command = {
   data: new SlashCommandBuilder()
@@ -26,7 +26,7 @@ export const slots: Command = {
     const formattedBalance = formatBalance(user.balance)
 
     if (bet <= 0) {
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription('❌ Amount to bet must be greater than 0.')
 
@@ -35,7 +35,7 @@ export const slots: Command = {
     }
 
     if (bet > user.balance) {
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription(
           `❌ You can't bet more than your balance. Current balance **$${formattedBalance}**`,
@@ -82,7 +82,7 @@ export const slots: Command = {
     user.balance += payout
     saveEconomy(economy)
 
-    const embed = createEconomyEmbed()
+    const embed = createEmbed(this.category)
       .setColor(color)
       .setDescription(
         [

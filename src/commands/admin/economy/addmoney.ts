@@ -1,8 +1,8 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../../types/command'
-import { createEconomyEmbed } from '../../../embeds/economyEmbed'
-import { getUser, loadEconomy, saveEconomy } from '../../../utils/economy'
+import { getUser, loadEconomy, saveEconomy } from '../../../services/economyService'
 import { formatBalance } from '../../../utils/formatBalance'
+import { createEmbed } from '../../../utils/embed'
 
 export const addmoney: Command = {
   data: new SlashCommandBuilder()
@@ -25,7 +25,7 @@ export const addmoney: Command = {
     const amount = interaction.options.getNumber('amount', true)
 
     if (amount <= 0) {
-      const embed = createEconomyEmbed()
+      const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription('❌ Amount must be greater than 0.')
       await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
@@ -40,7 +40,7 @@ export const addmoney: Command = {
 
     const formattedAmount = formatBalance(amount)
 
-    const embed = createEconomyEmbed()
+    const embed = createEmbed(this.category)
       .setColor('Green')
       .setDescription(`🟢 Added **$${formattedAmount}** to ${target}'s balance.`)
 
