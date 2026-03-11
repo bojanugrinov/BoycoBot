@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
 import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
 import { createEmbed } from '../../utils/embed'
 import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
@@ -19,10 +19,8 @@ export const crime: Command = {
     const guildId = interaction.guildId!
     const userId = interaction.user.id
 
-    const economy = loadEconomy()
-    const user = getUser(economy, guildId, userId)
-
-    const cooldown = getRemainingCooldown(user.lastCrime, COMMAND_COOLDOWN)
+    const economyUser = getEconomyUser(guildId, userId)
+    const cooldown = getRemainingCooldown(economyUser.lastCrime, COMMAND_COOLDOWN)
 
     if (cooldown) {
       const { hours, minutes, seconds } = cooldown
@@ -36,12 +34,12 @@ export const crime: Command = {
     }
 
     const success = Math.random() < 0.5
-    user.lastCrime = Date.now()
+    economyUser.lastCrime = Date.now()
 
     const description = success
       ? (() => {
           const earned = Math.floor(Math.random() * 101) + 100
-          user.balance += earned
+          economyUser.balance += earned
 
           return crimeSuccessMessages[
             Math.floor(Math.random() * crimeSuccessMessages.length)
@@ -49,15 +47,15 @@ export const crime: Command = {
         })()
       : (() => {
           const lost = Math.floor(Math.random() * 101) + 100
-          const amountLost = Math.min(lost, user.balance)
-          user.balance -= amountLost
+          const amountLost = Math.min(lost, economyUser.balance)
+          economyUser.balance -= amountLost
 
           return crimeFailureMessages[
             Math.floor(Math.random() * crimeFailureMessages.length)
           ].replace('${amountLost}', amountLost.toString())
         })()
 
-    saveEconomy(economy)
+    saveEconomy()
 
     const embed = createEmbed(this.category)
       .setColor(success ? 'Green' : 'Red')

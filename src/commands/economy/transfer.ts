@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { getUser, loadEconomy, saveEconomy } from '../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
 import { formatBalance } from '../../utils/formatBalance'
 import { createEmbed } from '../../utils/embed'
 
@@ -32,9 +32,8 @@ export const transfer: Command = {
       return
     }
 
-    const economy = loadEconomy()
-    const sender = getUser(economy, guildId, user.id)
-    const receiver = getUser(economy, guildId, target.id)
+    const sender = getEconomyUser(guildId, user.id)
+    const receiver = getEconomyUser(guildId, target.id)
 
     const amount = interaction.options.getNumber('amount', true)
     const formattedAmount = formatBalance(amount)
@@ -49,7 +48,7 @@ export const transfer: Command = {
 
     sender.balance -= amount
     receiver.balance += amount
-    saveEconomy(economy)
+    saveEconomy()
 
     const embed = createEmbed(this.category)
       .setColor('Green')

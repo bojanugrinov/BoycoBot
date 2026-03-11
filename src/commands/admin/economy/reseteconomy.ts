@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../../types/command'
-import { loadEconomy, saveEconomy } from '../../../services/economyService'
+import { getEconomy, saveEconomy } from '../../../modules/economy/store'
 import { createEmbed } from '../../../utils/embed'
 
 export const reseteconomy: Command = {
@@ -15,7 +15,7 @@ export const reseteconomy: Command = {
     const user = interaction.user
     const guildId = interaction.guildId!
 
-    const economy = loadEconomy()
+    const economy = getEconomy()
 
     if (!economy.guilds[guildId]) {
       economy.guilds[guildId] = { users: {} }
@@ -31,7 +31,7 @@ export const reseteconomy: Command = {
       user.balance = 0
     })
 
-    saveEconomy(economy)
+    saveEconomy()
 
     const embed = createEmbed(this.category)
       .setColor('Green')

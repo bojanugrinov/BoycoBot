@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
 import { createEmbed } from '../../utils/embed'
 import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
 
@@ -17,10 +17,8 @@ export const daily: Command = {
     const guildId = interaction.guildId!
     const userId = interaction.user.id
 
-    const economy = loadEconomy()
-    const user = getUser(economy, guildId, userId)
-
-    const cooldown = getRemainingCooldown(user.lastDaily, COMMAND_COOLDOWN)
+    const economyUser = getEconomyUser(guildId, userId)
+    const cooldown = getRemainingCooldown(economyUser.lastDaily, COMMAND_COOLDOWN)
 
     if (cooldown) {
       const { hours, minutes, seconds } = cooldown
@@ -33,10 +31,9 @@ export const daily: Command = {
       return
     }
 
-    user.balance += DAILY_AMOUNT
-    user.lastDaily = Date.now()
-
-    saveEconomy(economy)
+    economyUser.balance += DAILY_AMOUNT
+    economyUser.lastDaily = Date.now()
+    saveEconomy()
 
     const embed = createEmbed(this.category)
       .setColor('Green')

@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, getUser, saveEconomy } from '../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
 import { formatBalance } from '../../utils/formatBalance'
 import { createEmbed } from '../../utils/embed'
 
@@ -21,9 +21,8 @@ export const slots: Command = {
 
     const bet = interaction.options.getNumber('amount', true)
 
-    const economy = loadEconomy()
-    const user = getUser(economy, guildId, userId)
-    const formattedBalance = formatBalance(user.balance)
+    const economyUser = getEconomyUser(guildId, userId)
+    const formattedBalance = formatBalance(economyUser.balance)
 
     if (bet <= 0) {
       const embed = createEmbed(this.category)
@@ -34,7 +33,7 @@ export const slots: Command = {
       return
     }
 
-    if (bet > user.balance) {
+    if (bet > economyUser.balance) {
       const embed = createEmbed(this.category)
         .setColor('Red')
         .setDescription(
@@ -79,8 +78,8 @@ export const slots: Command = {
     const payout = isWin ? bet * slotResult.multiplier : -bet
     const color = isWin ? 'Green' : 'Red'
 
-    user.balance += payout
-    saveEconomy(economy)
+    economyUser.balance += payout
+    saveEconomy()
 
     const embed = createEmbed(this.category)
       .setColor(color)

@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy } from '../../services/economyService'
+import { getEconomy } from '../../modules/economy/store'
 import { formatBalance } from '../../utils/formatBalance'
 import { createEmbed } from '../../utils/embed'
 
@@ -15,7 +15,7 @@ export const leaderboard: Command = {
   async execute(interaction: CommandInteraction) {
     const guildId = interaction.guildId!
 
-    const economy = loadEconomy()
+    const economy = getEconomy()
     const guildEconomy = economy.guilds[guildId]
 
     if (!guildEconomy || Object.keys(guildEconomy.users).length === 0) {

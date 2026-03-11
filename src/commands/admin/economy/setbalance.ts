@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../../types/command'
-import { getUser, loadEconomy, saveEconomy } from '../../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../../modules/economy/store'
 import { formatBalance } from '../../../utils/formatBalance'
 import { createEmbed } from '../../../utils/embed'
 
@@ -32,12 +32,9 @@ export const setbalance: Command = {
       return
     }
 
-    const economy = loadEconomy()
-    const user = getUser(economy, guildId, target.id)
-
-    user.balance = amount
-
-    saveEconomy(economy)
+    const economyUser = getEconomyUser(guildId, target.id)
+    economyUser.balance = amount
+    saveEconomy()
 
     const formattedAmount = formatBalance(amount)
 

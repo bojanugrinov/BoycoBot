@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { loadEconomy, saveEconomy, getUser } from '../../services/economyService'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
 import { workMessages } from '../../constants/economyMessages'
 import { createEmbed } from '../../utils/embed'
 import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
@@ -17,10 +17,8 @@ export const work: Command = {
     const guildId = interaction.guildId!
     const userId = interaction.user.id
 
-    const economy = loadEconomy()
-    const user = getUser(economy, guildId, userId)
-
-    const cooldown = getRemainingCooldown(user.lastWork, COMMAND_COOLDOWN)
+    const economyUser = getEconomyUser(guildId, userId)
+    const cooldown = getRemainingCooldown(economyUser.lastWork, COMMAND_COOLDOWN)
 
     if (cooldown) {
       const { hours, minutes, seconds } = cooldown
@@ -34,10 +32,10 @@ export const work: Command = {
     }
 
     const earned = Math.floor(Math.random() * 100) + 1
-    user.balance += earned
-    user.lastWork = Date.now()
 
-    saveEconomy(economy)
+    economyUser.balance += earned
+    economyUser.lastWork = Date.now()
+    saveEconomy()
 
     const message = workMessages[Math.floor(Math.random() * workMessages.length)].replace(
       '${earned}',
