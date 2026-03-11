@@ -27,8 +27,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/bojanugrinov/boyco-discord-bot.git
-   cd boyco-discord-bot
+   git clone https://github.com/bojanugrinov/BoycoBot.git
+   cd BoycoBot
    ```
 
 2. **Install dependencies**
