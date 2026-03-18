@@ -21,7 +21,7 @@ export const cat: Command = {
         return
       }
 
-      const embed = createEmbed(this.category)
+      const embed = createEmbed(this.category, { includeAuthor: false })
         .setTitle('🐱 Random Cat Picture')
         .setImage(imageURL)
         .setFooter({
