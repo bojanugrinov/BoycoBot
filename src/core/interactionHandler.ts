@@ -4,13 +4,10 @@ import { Command, CommandScope } from '../types/command'
 export async function handleInteraction(
   interaction: Interaction,
   commands: Collection<string, Command>,
-  adminCommands: Collection<string, Command>,
 ): Promise<void> {
   if (!interaction.isChatInputCommand()) return
 
-  const command =
-    commands.get(interaction.commandName) || adminCommands.get(interaction.commandName)
-
+  const command = commands.get(interaction.commandName)
   const timestamp = new Date().toLocaleString('en-CA', { hour12: false }).replace(',', ' -')
 
   if (!command) {

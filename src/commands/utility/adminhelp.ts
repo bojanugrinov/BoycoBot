@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
-import { Category, Command, CommandScope } from '../../../types/command'
-import { createEmbed } from '../../../utils/embed'
-import * as commandModules from '../index'
+import { Category, Command, CommandScope } from '../../types/command'
+import { createEmbed } from '../../utils/embed'
+import * as commandsList from '../index'
 
 export const adminhelp: Command = {
   data: new SlashCommandBuilder()
@@ -12,12 +12,15 @@ export const adminhelp: Command = {
   scope: CommandScope.ADMIN,
 
   async execute(interaction: CommandInteraction) {
-    const commandList = Object.values(commandModules) as Command[]
+    const commands = Object.values(commandsList).filter(
+      (command) => command.scope === CommandScope.ADMIN,
+    ) as Command[]
+
     const categories: Record<string, Command[]> = {}
     const client = interaction.client.user
     const clientAvatar = client.displayAvatarURL({ extension: 'png', size: 1024 })
 
-    commandList.map((command) => {
+    commands.map((command) => {
       const category = command.category
       if (!categories[category]) categories[category] = []
       categories[category].push(command)

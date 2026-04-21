@@ -12,7 +12,10 @@ export const help: Command = {
   scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
-    const commandList = Object.values(commandModules) as Command[]
+    const commandList = Object.values(commandModules).filter(
+      (command) => command.scope === CommandScope.PUBLIC,
+    ) as Command[]
+
     const categories: Record<string, Command[]> = {}
     const client = interaction.client.user
     const clientAvatar = client.displayAvatarURL({ extension: 'png', size: 1024 })

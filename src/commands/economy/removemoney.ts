@@ -1,18 +1,18 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
-import { Category, Command, CommandScope } from '../../../types/command'
-import { getEconomyUser, saveEconomy } from '../../../modules/economy/store'
-import { formatBalance } from '../../../utils/formatBalance'
-import { createEmbed } from '../../../utils/embed'
+import { Category, Command, CommandScope } from '../../types/command'
+import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
+import { formatBalance } from '../../utils/formatBalance'
+import { createEmbed } from '../../utils/embed'
 
-export const addmoney: Command = {
+export const removemoney: Command = {
   data: new SlashCommandBuilder()
-    .setName('addmoney')
-    .setDescription(`Add money to a user.`)
+    .setName('removemoney')
+    .setDescription(`Remove money from a user.`)
     .addUserOption((option) =>
-      option.setName('user').setDescription('The user to add money to.').setRequired(true),
+      option.setName('user').setDescription('The user to remove money from.').setRequired(true),
     )
     .addNumberOption((option) =>
-      option.setName('amount').setDescription('The amount to add.').setRequired(true),
+      option.setName('amount').setDescription('The amount to remove.').setRequired(true),
     ),
 
   category: Category.ECONOMY,
@@ -33,14 +33,17 @@ export const addmoney: Command = {
     }
 
     const economyUser = getEconomyUser(guildId, target.id)
-    economyUser.balance += amount
+
+    if (amount > economyUser.balance) economyUser.balance = 0
+    else economyUser.balance -= amount
+
     saveEconomy()
 
     const formattedAmount = formatBalance(amount)
 
     const embed = createEmbed(this.category)
-      .setColor('Green')
-      .setDescription(`🟢 Added **$${formattedAmount}** to ${target}'s balance.`)
+      .setColor('Red')
+      .setDescription(`🔴 Removed **$${formattedAmount}** from ${target}'s balance.`)
 
     await interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral })
   },
