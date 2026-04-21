@@ -2,7 +2,7 @@ import path from 'path'
 import { Economy } from './types'
 import { loadJSON, saveJSON } from '../../store/json'
 
-const FILEPATH = path.join(__dirname, '../../data/economy.json')
+const FILEPATH = path.join(__dirname, '../../data/guildEconomy.json')
 
 const EconomyStore = (() => {
   const economy: Economy = loadJSON<Economy>(FILEPATH, { guilds: {} })
