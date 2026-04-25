@@ -5,7 +5,7 @@ export function createEmbed(
   category: Category,
   options?: { includeAuthor?: boolean },
 ): EmbedBuilder {
-  const embed = new EmbedBuilder().setColor('#0e7fe9')
+  const embed = new EmbedBuilder().setColor('#186ed6')
 
   if (options?.includeAuthor ?? true) {
     embed.setAuthor({ name: category })
