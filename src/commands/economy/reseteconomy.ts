@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
+import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
 import { getEconomy, saveEconomy } from '../../modules/economy/store'
 import { createEmbed } from '../../utils/embed'
