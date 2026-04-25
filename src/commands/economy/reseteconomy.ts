@@ -15,21 +15,11 @@ export const reseteconomy: Command = {
     const user = interaction.user
     const guildId = interaction.guildId!
 
-    const economy = EconomyStore.economy()
+    const economy = EconomyStore.economy(guildId)
 
-    if (!economy.guilds[guildId]) {
-      economy.guilds[guildId] = { users: {} }
-    }
+    console.log(economy)
 
-    const guild = economy.guilds[guildId]
-
-    if (!guild.users) {
-      guild.users = {}
-    }
-
-    Object.values(guild.users).forEach((user) => {
-      user.balance = 0
-    })
+    economy.users = {}
 
     EconomyStore.save()
 

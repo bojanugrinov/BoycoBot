@@ -15,9 +15,9 @@ export const leaderboard: Command = {
   async execute(interaction: CommandInteraction) {
     const guildId = interaction.guildId!
 
-    const guildEconomy = EconomyStore.guild(guildId)
+    const economy = EconomyStore.economy(guildId)
 
-    if (!guildEconomy || Object.keys(guildEconomy.users).length === 0) {
+    if (!economy || Object.keys(economy.users).length === 0) {
       const embed = createEmbed(this.category).setDescription(
         'No economy data for this server yet.',
       )
@@ -25,7 +25,7 @@ export const leaderboard: Command = {
       return
     }
 
-    const users = Object.entries(guildEconomy.users).map(([id, data]) => ({
+    const users = Object.entries(economy.users).map(([id, data]) => ({
       id,
       balance: data.balance,
     }))

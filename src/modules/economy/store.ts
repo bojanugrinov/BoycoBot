@@ -11,9 +11,7 @@ const economy: Economy = loadJSON(FILEPATH, {
 export const EconomyStore = {
   save: () => saveJSON(FILEPATH, economy),
 
-  economy: () => economy,
-
-  guild: (guildId: string) => economy.guilds[guildId],
+  economy: (guildId: string) => economy.guilds[guildId],
 
   user: (guildId: string, userId: string) => {
     if (!economy.guilds[guildId]) {
