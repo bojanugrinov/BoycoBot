@@ -1,3 +1,8 @@
+// CONFIG
+export { disablecommand } from './config/disablecommand'
+export { disabledcommands } from './config/disabledcommands'
+export { enablecommand } from './config/enablecommand'
+
 // ECONOMY
 export { addmoney } from './economy/addmoney'
 export { balance } from './economy/balance'

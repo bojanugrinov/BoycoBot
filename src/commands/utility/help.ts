@@ -1,7 +1,7 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
 import { createEmbed } from '../../utils/embed'
-import * as commandModules from '../index'
+import { getEnabledCommands } from '../../utils/getEnabledCommands'
 
 export const help: Command = {
   data: new SlashCommandBuilder()
@@ -12,7 +12,8 @@ export const help: Command = {
   scope: CommandScope.PUBLIC,
 
   async execute(interaction: CommandInteraction) {
-    const commandList = Object.values(commandModules).filter(
+    const guildId = interaction.guildId!
+    const commands = getEnabledCommands(guildId).filter(
       (command) => command.scope === CommandScope.PUBLIC,
     ) as Command[]
 
@@ -20,7 +21,7 @@ export const help: Command = {
     const client = interaction.client.user
     const clientAvatar = client.displayAvatarURL({ extension: 'png', size: 1024 })
 
-    commandList.map((command) => {
+    commands.map((command) => {
       const category = command.category
       if (!categories[category]) categories[category] = []
       categories[category].push(command)
