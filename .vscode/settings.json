@@ -12,6 +12,8 @@
     "removemoney",
     "reseteconomy",
     "serverinfo",
-    "setbalance"
+    "setbalance",
+    "tsparser",
+    "tsparses"
   ]
 }
