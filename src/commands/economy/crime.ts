@@ -1,6 +1,6 @@
 import { CommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
+import { EconomyStore } from '../../modules/economy/store'
 import { crimeFailureMessages, crimeSuccessMessages } from '../../constants/economyMessages'
 import { createEmbed } from '../../utils/embed'
 import { getRemainingCooldown } from '../../utils/getRemainingCooldown'
@@ -19,7 +19,7 @@ export const crime: Command = {
     const guildId = interaction.guildId!
     const userId = interaction.user.id
 
-    const economyUser = getEconomyUser(guildId, userId)
+    const economyUser = EconomyStore.user(guildId, userId)
     const cooldown = getRemainingCooldown(economyUser.lastCrime, COMMAND_COOLDOWN)
 
     if (cooldown) {
@@ -55,7 +55,7 @@ export const crime: Command = {
           ].replace('${amountLost}', amountLost.toString())
         })()
 
-    saveEconomy()
+    EconomyStore.save()
 
     const embed = createEmbed(this.category)
       .setColor(success ? 'Green' : 'Red')

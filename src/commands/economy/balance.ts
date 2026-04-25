@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { getEconomyUser } from '../../modules/economy/store'
+import { EconomyStore } from '../../modules/economy/store'
 import { formatBalance } from '../../utils/formatBalance'
 import { createEmbed } from '../../utils/embed'
 
@@ -14,7 +14,7 @@ export const balance: Command = {
     const guildId = interaction.guildId!
     const userId = interaction.user.id
 
-    const economyUser = getEconomyUser(guildId, userId)
+    const economyUser = EconomyStore.user(guildId, userId)
     const balance = formatBalance(economyUser.balance)
 
     const embed = createEmbed(this.category).setDescription(

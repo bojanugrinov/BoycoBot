@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, MessageFlags, SlashCommandBuilder } from 'discord.js'
 import { Category, Command, CommandScope } from '../../types/command'
-import { getEconomyUser, saveEconomy } from '../../modules/economy/store'
+import { EconomyStore } from '../../modules/economy/store'
 import { formatBalance } from '../../utils/formatBalance'
 import { createEmbed } from '../../utils/embed'
 
@@ -32,12 +32,12 @@ export const removemoney: Command = {
       return
     }
 
-    const economyUser = getEconomyUser(guildId, target.id)
+    const economyUser = EconomyStore.user(guildId, target.id)
 
     if (amount > economyUser.balance) economyUser.balance = 0
     else economyUser.balance -= amount
 
-    saveEconomy()
+    EconomyStore.save()
 
     const formattedAmount = formatBalance(amount)
 
