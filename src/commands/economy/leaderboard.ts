@@ -30,13 +30,17 @@ export const leaderboard: Command = {
       balance: data.balance,
     }))
 
-    const topUsers = users.sort((a, b) => b.balance - a.balance).slice(0, 10)
-
-    const message = topUsers
+    const topUsers = users
+      .sort((a, b) => b.balance - a.balance)
+      .slice(0, 10)
       .map((user, index) => {
         return `**${index + 1}.** <@${user.id}> — **$${formatBalance(user.balance)}** 💸`
       })
       .join('\n')
+
+    const message = `🏆 **Leaderboard**
+                    Top 10 richest users on the server.\n
+                    ${topUsers}`
 
     const embed = createEmbed(this.category).setTimestamp().setDescription(message)
 
