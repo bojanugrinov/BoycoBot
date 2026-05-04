@@ -37,7 +37,7 @@ export const daily: Command = {
 
     const embed = createEmbed(this.category)
       .setColor('Green')
-      .setDescription(`You claimed your daily  reward of **$${DAILY_AMOUNT}** 💸`)
+      .setDescription(`You claimed your daily reward of **$${DAILY_AMOUNT}** 💸`)
 
     await interaction.reply({ embeds: [embed] })
   },
